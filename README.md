@@ -37,6 +37,7 @@ Everything you need is in the app directory; simply change directory (ie `cd app
 ```
 cd app
 npm install .
+npm run build:css
 ```
 
 > Open the project in your favorite code editor.
