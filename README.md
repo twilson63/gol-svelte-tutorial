@@ -25,7 +25,7 @@ Also, we are using bulma css to provide some styling. With Svelte you can add cs
 
 ## Clone the project
 
-```
+```sh
 npx degit twilson63/gol-svelte-tutorial tutorial
 cd tutorial
 ```
@@ -34,7 +34,7 @@ cd tutorial
 
 Everything you need is in the app directory; simply change directory (ie `cd app`) from this home directory.
 
-```
+```sh
 cd app
 npm install .
 npm run build:css
@@ -44,7 +44,7 @@ npm run build:css
 
 Start the dev server:
 
-```
+```sh
 npm run dev
 ```
 
@@ -65,7 +65,7 @@ Before we make them dynamic, let's open our `src/App.svelte` file and import the
 To import a component in svelte, we need to use an import statement. Remember to include the extension in the import.
 Now reference the component in the html markup:
 
-```
+```svelte
 <script>
 import Header from './Header.svelte'
 </script>
@@ -78,7 +78,7 @@ Now let's return to our `src/Header.svelte` file and make our title and subtitle
 
 We can use `{}` in our html to specify a dynamic value. These dynamic values are known as _state_ or _props_; if we want them to be _state_, we simply declare them in our script as local variables.
 
-```
+```svelte
 <script>
 let title = "Game of Life"
 let subtitle = "A Life Simulation in Svelte"
@@ -88,7 +88,7 @@ let subtitle = "A Life Simulation in Svelte"
 
 Now we can add our dynamic values in our markup:
 
-```
+```svelte
 <h1 class="title">{title}</h1>
 <h2 class="subtitle">{subtitle}</h2>
 ```
@@ -100,7 +100,7 @@ down as _props_...
 
 Let's give it a shot; change the local variables as exports like so:
 
-```
+```svelte
 <script>
 export let title
 export let subtitle
@@ -109,7 +109,7 @@ export let subtitle
 
 From our parent (`Header`) component, we need to pass the values down to the child (`App`) component. Lets open `src/App.svelte` and add the props as attributes to the Header tag:
 
-```
+```svelte
 <Header
   title="Game of Life"
   subtitle="Conway's Game of Life Simulator using Svelte"
@@ -134,7 +134,7 @@ In our board, a cell with the background color of white signifies 'dead' and a b
 
 Now, in our `src/App.svelte` component, let's import the `src/Grid.svelte`:
 
-```
+```svelte
 <script>
 import Grid from './Grid.svelte'
 ...
@@ -153,7 +153,7 @@ https://svelte.dev/docs#svelte_store
 
 You can see our store here:
 
-```
+```js
 import gol from './gol'
 import { readable } from 'svelte/store'
 
@@ -184,7 +184,7 @@ means our svelte components will be able to react to any value updates from the 
 
 Let's open the `src/Grid.svelte` file and import the store (and the component size to responsively determine the size of the board). Let's also import the `src/Cell.svelte` component.
 
-```
+```svelte
 <script>
 import { store, size } from './store'
 import Cell from './Cell.svelte'
@@ -196,7 +196,7 @@ import Cell from './Cell.svelte'
 
 The store component has a subscribe function that returns a value everytime a change occurs. We can access this using shorthand with the $ prefix. 
 
-```
+```js
 console.log($store)
 ```
 
@@ -211,7 +211,7 @@ One is called `each`; this block takes an array (followed by the `as` operator) 
 
 Here is what an `each` block looks like:
 
-```
+```svelte
 {#each [array] as [item], [index] (key)}
 ....
 {/each}
@@ -219,7 +219,7 @@ Here is what an `each` block looks like:
 
 Svelte blocks use the `{}` braces and the `#` to indicate the start of the block and `/` to indicate the end of the block.
 
-```
+```svelte
 {#each expression} <!-- start -->
 ...
 {/each} <!-- end -->
@@ -233,7 +233,7 @@ The index and key are optional; however, the key must also be unique.
 
 Using our store, here is what our each block will look like for our rows:
 
-```
+```svelte
 {#each $store as r, row}
 ...
 {/each}
@@ -241,7 +241,7 @@ Using our store, here is what our each block will look like for our rows:
 
 This is great, but we need an inner loop. Because the r is another array, we can nest the `each` blocks.
 
-```
+```svelte
 {#each $store as r, row}
   {#each r as alive, col}
     ...
@@ -254,7 +254,7 @@ In the innermost `<div>` tag of the `Grid.svelte` file (referencing the `grid` c
 Additionally, as we declare the cell block, lets add the row, col, and alive attributes. This will set up our next lesson.
 
 
-```
+```svelte
 <div class="grid" style="--size:{size}">
   {#each $store as r, row}
     {#each r as alive, col}
@@ -273,7 +273,7 @@ In this lesson, we learned a little about stores and how they can help us connec
 
 Now that we have a grid, we need to open our `src/Cell.svelte` component and export the props that we are providing as attributes.
 
-```
+```svelte
 <script>
 export let row
 export let col
@@ -284,14 +284,14 @@ export let alive
 We want to use the `alive` value to toggle a class on the cell `<div>` tag.
 To do this, you may be thinking to use an expression in the class attribute value like this:
 
-```
+```svelte
 <div class="cell {alive ? 'alive' : ''}" />
 ```
 
 Which would work (with no problem), but svelte is a compiler;
 so, we can do things like this to make it a little more readable:
 
-```
+```svelte
 <div class="cell" class:alive />
 ```
 
@@ -301,7 +301,7 @@ When you save this component, you should now see the cells come to life; awesome
 
 Open the `src/Header.svelte` component and import `src/Actions.svelte` inside.
 
-```
+```svelte
 <script>
 import Actions from './Actions.svelte'
 ...
@@ -318,7 +318,7 @@ In order to do this, we need to capture their click events and then call the fun
 
 Open the `src/Actions.svelte` component and let's import these functions from our store.
 
-```
+```svelte
 <script>
 import { start, stop, generate } from './store'
 </script>
@@ -327,7 +327,7 @@ import { start, stop, generate } from './store'
 With svelte we can use the `on` directive to listen to any event that an element may emit.
 In this case, we want to handle the click event; so, for each button, let's handle the event and call respective functions from the store like so:
 
-```
+```svelte
 <button class="button is-success" on:click={start}>Start</button>
 <button class="button is-danger" on:click={stop}>Stop</button>
 <button class="button is-info" on:click={generate}>Generate</button>
