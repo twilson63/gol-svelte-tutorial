@@ -373,3 +373,9 @@ Congrats! You completed the tutorial; this is by no means a comprehensive lesson
 * get creative
 
 Did you make something cool? Send me your work! Tweet @twilson63
+
+
+## Thanks
+
+@dkillough Daniel Killough for the huge help! 
+
