@@ -23,11 +23,11 @@ Also, we are using bulma css to provide some styling, with Svelte you can add cs
 * NodeJS
 * Git
 
-## Checkout the project
+## Clone the project
 
 ```
-git clone https://github.com/twilson63/svelte-gol-demo.git
-cd svelte-gol-demo
+npx degit twilson63/gol-svelte-tutorial tutorial
+cd tutorial
 ```
 
 ## Setup
