@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "bulma": "^0.7.5",
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.13.1",
     "ramda": "^0.26.1",
     "random-int": "^2.0.0",
     "sirv-cli": "^0.4.4"
